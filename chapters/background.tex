@@ -1,128 +1,330 @@
 \chapter{\ifenglish Background Knowledge and Theory\else ทฤษฎีที่เกี่ยวข้อง\fi}
 
-การทำโครงงาน เริ่มต้นด้วยการศึกษาค้นคว้า ทฤษฎีที่เกี่ยวข้อง หรือ งานวิจัย/โครงงาน ที่เคยมีผู้นำเสนอไว้แล้ว ซึ่งเนื้อหาในบทนี้ก็จะเกี่ยวกับการอธิบายถึงสิ่งที่เกี่ยวข้องกับโครงงาน เพื่อให้ผู้อ่านเข้าใจเนื้อหาในบทถัดๆ ไปได้ง่ายขึ้น
+\section{ด้านโครงสร้างเว็บแอปพลิเคชัน}
 
-\section{The first section}
-The text for Section 1 goes here.
+ในส่วนนี้จะอธิบายถึงโครงสร้างของเว็บแอปพลิเคชันที่ใช้ในการพัฒนา
+\subsection{MVC Architecture}
 
-\section{Second section}
-Section 2 text.
+MVC [1] เป็นตัวย่อของคําว่า Model View Controller ใช้เรียกรูปแบบการพัฒนาซอฟต์แวร์ที่มีโครงสร้างซึ่งแบ่งออกมาเป็น 3 ส่วนหลัก ตามตัวย่อของชื่อ รูปแบบการพัฒนาซอฟต์แวร์แบบ MVC ถูกนําไปใช้
+ในขั้นตอนการพัฒนาหลากหลายภาษา เพราะ MVC เป็นเพียงหลักการออกแบบโปรแกรม (Design Pattern) รูปแบบหนึ่งเท่านั้น ซึ่งเป็นที่นิยมมาก ในการนํามาพัฒนาแอพพลิเคชั่นซอฟต์แวร์แต่ละแพลตฟอร์ม
+และประยุกต์ใช้ในอีกหลาย ๆ ด้าน
 
-\subsection{Subsection heading goes here}
+\subsubsection{ส่วนของ Model (M)}
+model คือส่วนของการเก็บรวบรวมข้อมูล ไม่ว่าข้อมูลนั้น ๆ จะถูกจัดเก็บในรูปแบบใดก็ตาม ในฐานข้อมูล
+แบบเป็น Object Class หรือที่นิยมเรียกกันว่า VO ( Value Object ) หรือเก็บเป็นไฟล์ข้อมูลเลย เมื่อ
 
-Subsection 1 text
+ข้อมูลถูกโหลดเข้ามาจากที่ต่าง ๆ และเข้ามายังส่วนของโมเดล ตัวโมเดลจะทําการจัดการตระเตรียมข้อมูลให้
+เป็นรูปแบบที่เหมาะสม เพื่อรอการร้องขอข้อมูลจากส่วนของ Controller
 
-\subsubsection{Subsubsection 1 heading goes here}
-Subsubsection 1 text
+\subsubsection{ส่วนของ View (V)}
+view คือส่วนของการแสดงผล หรือส่วนที่จะปฏิสัมพันธ์กับผู้ใช้งาน ( User Interface ) หน้าที่ของ view
+ในการเขียนโปรแกรมแบบ MVC คือคอยรับคําสั่งจากส่วนของ Controller และ End User เริ่มแรกเลยตัว
+วิว อาจจะได้รับคําสั่งจาก Controller ให้แสดงผลหน้า Home และเมื่อผู้ใช้งานหน้าเว็บกดป่ ุมสั่งซื้อ View
+จะส่งข้อมูลไปให้Controller เพื่อประมวลผลและแสดงบางอย่างจาก Action นั้น
 
-\subsubsection{Subsubsection 2 heading goes here}
-Subsubsection 2 text
+\subsubsection{ส่วนของ Controller (C)}
+controller คือส่วนของการเริ่มทํางาน และรับคําสั่ง โดยที่คําสั่งนั้นจะเกิดขึ้นในส่วนการติดต่อกับผู้ใช้งานคือ
+view เมื่อผู้ใช้งานทําการ Interactive กับ UI view จะเกิดเหตุการณ์หรือข้อมูลบางอย่างขึ้น ตัววิวจะส่งข้อมูลนั้น มายัง controller ตัว controller จะทําการประมวลผลโดยบางคําสั่งอาจจะต้องไปติดต่อกับ model
+ก่อน เพื่อทําการประมวลผลข้อมูลอย่างถูกต้องเรียบร้อยแล้วก็จะส่งไปยัง view เพื่อแสดงผลตามคําสั่งที่ end
+user ร้องขอมา Controller จะทําหน้าที่เป็นตัวกลางระหว่าง Model และ View ให้ทํางานร่วมกันอย่างมี
+ประสิทธิภาพและตรงกับ ความต้องการของ End User มากที่สุด
+\subsection{RESTful API}
 
-\section{Third section}
-Section 3 text. The dielectric constant\index{dielectric constant}
-at the air-metal interface determines
-the resonance shift\index{resonance shift} as absorption or capture occurs
-is shown in Equation~\eqref{eq:dielectric}:
+RESTful API [2] เป็นอินเทอร์เฟซที่ระบบคอมพิวเตอร์สองระบบใช้เพื่อแลกเปลี่ยนข้อมูลผ่านอินเทอร์เน็ตได้อย่างปลอดภัย แอปพลิเคชันทางธุรกิจส่วนใหญ่ต้องสื่อสารกับแอปพลิเคชันภายในอื่นๆ และของบุคคลที่สามเพื่อทํางานต่างๆ ตัวอย่างเช่น หากต้องการสร้างสลิปเงินเดือน ระบบบัญชีภายในของคุณต้องแบ่งปัน
+ข้อมูลกับระบบธนาคารของลูกค้าเพื่อออกใบแจ้งหนี้และสื่อสารกับแอปพลิเคชันบันทึกเวลาปฏิบัติงานภายใน
+โดยอัตโนมัติRESTful API ให้การสนับสนุนการแลกเปลี่ยนข้อมูลนี้เพราะเป็นระบบที่มีมาตรฐานการสื่อสารระหว่างซอฟต์แวร์ที่ปลอดภัย เสถียร และมีประสิทธิภาพ
 
-\begin{equation}\label{eq:dielectric}
-k_1=\frac{\omega}{c({1/\varepsilon_m + 1/\varepsilon_i})^{1/2}}=k_2=\frac{\omega
-\sin(\theta)\varepsilon_\mathit{air}^{1/2}}{c}
-\end{equation}
+\subsubsection{API (Application Programming Interface)}
+ส่วนต่อประสานโปรแกรมประยุกต์(Application Programming Interface หรือ API) กําหนดกฎที่คุณ
+ต้องปฏิบัติตามเพื่อสื่อสารกับระบบซอฟต์แวร์อื่น โดยนักพัฒนาเปิ ดเผยหรือสร้าง API เพื่อให้แอปพลิเคชัน
+อื่นสามารถสื่อสารกับแอปพลิเคชันของตนได้ทางโปรแกรม ตัวอย่างเช่น แอปพลิเคชันบันทึกเวลาปฏิบัติงาน
+แสดง API ที่ขอชื่อเต็มของพนักงานและช่วงวันที่ เมื่อได้รับข้อมูลนี้แล้ว ระบบจะประมวลผลบันทึกเวลาปฏิบัติงานของพนักงานเป็นการภายใน
+ และส่งกลับจํานวนชั่วโมงที่ทํางานในช่วงวันที่ดังกล่าว ทั้งนี้คุณสามารถ
+มองได้ว่า API เว็บเป็นเกตเวย์ระหว่างไคลเอ็นต์และทรัพยากรบนเว็บ
 
-\noindent
-where $\omega$ is the frequency of the plasmon, $c$ is the speed of
-light, $\varepsilon_m$ is the dielectric constant of the metal,
-$\varepsilon_i$ is the dielectric constant of neighboring insulator,
-and $\varepsilon_\mathit{air}$ is the dielectric constant of air.
+ไคลเอ็นต์ ไคลเอ็นต์คือผู้ใช้ที่ต้องการเข้าถึงข้อมูลจากเว็บ โดยไคลเอ็นต์อาจเป็นบุคคลหรือระบบซอฟต์แวร์ที่ใช้API ก็ได้ 
+ตัวอย่างเช่น นักพัฒนาสามารถเขียนโปรแกรมที่เข้าถึงข้อมูลสภาพอากาศจากระบบสภาพ
+อากาศ หรือคุณสามารถเข้าถึงข้อมูลเดียวกันจากเบราว์เซอร์เมื่อคุณเยี่ยมชมเว็บไซต์รายงานสภาพอากาศได้
+โดยตรง
 
-\section{About using figures in your report}
+ทรัพยากร ทรัพยากรคือข้อมูลที่แอปพลิเคชันต่างๆ มอบให้แก่ไคลเอ็นต์ โดยทรัพยากรอาจเป็นรูปภาพ
+วิดีโอ ข้อความ ตัวเลข หรือข้อมูลประเภทใดก็ได้ ทั้งนี้เครื่องคอมพิวเตอร์ที่มอบทรัพยากรให้แก่ไคลเอ็นต์นั้น
+เรียกอีกอย่างว่าเซิร์ฟเวอร์ องค์กรต่างๆ ใช้API เพื่อแบ่งปันทรัพยากรและให้บริการเว็บในขณะที่ยังคงดูแล
+รักษาความปลอดภัย การควบคุม และการรับรองความถูกต้องไปพร้อมกัน นอกจากนี้API ยังช่วยให้ลูกค้า
+ระบุได้ว่าไคลเอ็นต์ใดสามารถเข้าถึงทรัพยากรภายในที่เฉพาะเจาะจงได้
 
-% define a command that produces some filler text, the lorem ipsum.
-\newcommand{\loremipsum}{
-  \textit{Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-  minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-  aliquip ex ea commodo consequat. Duis aute irure dolor in
-  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-  culpa qui officia deserunt mollit anim id est laborum.}\par}
+\subsubsection{REST (Representational State Transfer)}
 
-\begin{figure}
-  \centering
+REST เป็นสถาปัตยกรรมซอฟต์แวร์ที่กําหนดเงื่อนไขว่า API ควรทํางานอย่างไร โดยแต่แรกเริ่มนั้น มีการ
+สร้าง REST ขึ้นเพื่อเป็นแนวทางในการจัดการการสื่อสารบนเครือข่ายที่ซับซ้อน เช่น อินเทอร์เน็ต คุณสามารถใช้สถาปัตยกรรม REST เพื่อรองรับการสื่อสารที่มีประสิทธิภาพสูงและเชื่อถือได้ในทุกระดับ คุณยังสามารถใช้และปรับเปลี่ยนสถาปั ตยกรรมได้อย่างง่ายดาย โดยนําความสามารถในการมองเห็นและการเคลื่อน
+ย้ายข้ามแพลตฟอร์มมาสู่ทุกระบบ API
 
-  \fbox{
-     \parbox{.6\textwidth}{\loremipsum}
-  }
+นักพัฒนา API สามารถออกแบบ API ได้โดยใช้สถาปั ตยกรรมต่างๆ โดย API ที่เป็นไปตามรูปแบบสถาปัตยกรรม REST เรียกว่า REST API บริการเว็บที่ใช้สถาปัตยกรรม REST เรียกว่าบริการเว็บ RESTful
+คําว่า RESTful API โดยทั่วไปหมายถึง API เว็บแบบ RESTful อย่างไรก็ตาม คุณสามารถใช้คําว่า REST
+API และ RESTful API แทนกันได
 
-  % To include an image in the figure, say myimage.pdf, you could use
-  % the following code. Look up the documentation for the package
-  % graphicx for more information.
-  % \includegraphics[width=\textwidth]{myimage}
+\subsection{ระบบฐานข้อมูล (Database System)}
 
-  \caption[Sample figure]{This figure is a sample containing \gls{lorem ipsum},
-  showing you how you can include figures and glossary in your report.
-  You can specify a shorter caption that will appear in the List of Figures.}
-  \label{fig:sample-figure}
-\end{figure}
+ระบบฐานข้อมูล (Database System) [3] คือ ระบบที่รวบรวมข้อมูลต่าง ๆ ที่เกี่ยวข้องกันเข้าไว้ด้วยกันอย่าง
+มีระบบ มีความสัมพันธ์ระหว่างข้อมูลต่าง ๆ ที่ชัดเจน ในระบบฐานข้อมูลจะประกอบด้วยแฟ้มข้อมูลหลาย
+แฟ้มที่มีข้อมูลเกี่ยวข้องสัมพันธ์กันเข้าไว้ด้วยกันอย่างเป็นระบบและเปิดโอกาสให้ผู้ใช้สามารถใช้งาน และดูแล
+รักษาป้องกันข้อมูลเหล่านี้ได้อย่างมีประสิทธิภาพ โดยมีซอฟต์แวร์ที่เปรียบเสมือนสื่อกลางระหว่าง ผู้ใช้และ
+โปรแกรมต่าง ๆ ที่เกี่ยวข้องกับการใช้ฐานข้อมูล เรียกว่า ระบบจัดการฐานข้อมูล หรือ DBMS (data base
+management system)มีหน้าที่ช่วยให้ผู้ใช้เข้าถึงข้อมูลได้ง่ายสะดวกและมีประสิทธิภาพ การเข้าถึงข้อมูล
+ของผู้ใช้อาจเป็นการสร้างฐานข้อมูล การแก้ไขฐานข้อมูล หรือการตั้งคําถามเพื่อให้ได้ข้อมูลมา โดยผู้ใช้ไม่จําเป็นต้องรับรู้เกี่ยวกับรายละเอียดภายในโครงสร้างของฐานข้อมูล
 
-Using \verb.\label. and \verb.\ref. commands allows us to refer to
-figures easily. If we can refer to Figures
-\ref{fig:walrus} and \ref{fig:sample-figure} by name in the {\LaTeX}
-source code, then we will not need to update the code that refers to it
-even if the placement or ordering of the figures changes.
+ประโยชน์ของฐานข้อมูล
 
-\loremipsum\loremipsum
+1. ลดการเก็บข้อมูลที่ซํ้าซ้อน
+ข้อมูลบางชุดที่อยู่ในรูปของแฟ้มข้อมูลอาจมีปรากฏอยู่หลาย ๆ แห่ง เพราะมีผู้ใช้ข้อมูลชุดนี้หลายคน
+เมื่อใช้ระบบฐานข้อมูลแล้วจะช่วยให้ความซํ้าซ้อนของข้อมูลลดน้อยลง
 
-% This code demonstrates how to get a landscape table or figure. It
-% uses the package lscape to turn everything but the page number into
-% landscape orientation. Everything should be included within an
-% \afterpage{ .... } to avoid causing a page break too early.
-\afterpage{
-  \begin{landscape}
-  \begin{table}
-    \caption{Sample landscape table}
-    \label{tab:sample-table}
+2. รักษาความถูกต้องของข้อมูล
+เนื่องจากฐานข้อมูลมีเพียงฐานข้อมูลเดียว ใน กรณีที่มีข้อมูลชุดเดียวกันปรากฏอยู่หลายแห่งในฐานข้อมูล ข้อมูลเหล่านี้จะต้องตรงกัน ถ้ามีการแก้ไขข้อมูลนี้ทุก ๆ แห่งที่ข้อมูลปรากฏอยู่จะแก้ไขให้ถูกต้อง
+ตามกันหมดโดยอัตโนมัติด้วยระบบจัดการฐานข้อมูล
 
-    \centering
+3. การป้องกันและรักษาความปลอดภัยให้กับข้อมูลทําได้อย่างสะดวก
+การป้องกันและรักษาความปลอดภัยกับข้อมูลระบบฐานข้อมูลจะให้เฉพาะผู้ที่เกี่ยวข้องเท่านั้น ซึ่งก่อ
+ให้เกิดความปลอดภัย (security) ของข้อมูลด้วย
 
-    \begin{tabular}{c||c|c}
-        Year & A & B \\
-        \hline\hline
-        1989 & 12 & 23 \\
-        1990 & 4 & 9 \\
-        1991 & 3 & 6 \\
-    \end{tabular}
-  \end{table}
-  \end{landscape}
-}
 
-\loremipsum\loremipsum\loremipsum
+\section{ด้านเทคโนโลยี}
 
-\section{Overfull hbox}
+ในส่วนนี้จะอธิบายถึงเทคโนโลยีที่ใช้ในการพัฒนาเว็บแอปพลิเคชัน
+\subsection{HTML}
 
-When the \verb.semifinal. option is passed to the \verb.cpecmu. document class,
-any line that is longer than the line width, i.e., an overfull hbox, will be
-highlighted with a black solid rule:
-\begin{center}
-\begin{minipage}{2em}
-juxtaposition
-\end{minipage}
-\end{center}
+HTML [4] ย่อมาจาก Hyper Text Markup Language คือภาษาคอมพิวเตอร์ที่ใช้ในการแสดงผลของ
+เอกสารบน website หรือที่เราเรียกกันว่าเว็บเพจ ถูกพัฒนาและกําหนดมาตรฐานโดยองค์กร World Wide
+Web Consortium (W3C) และจากการพัฒนาทางด้าน Software ของ Microsoft ทําให้ภาษา HTML
+เป็นอีกภาษาหนึ่งที่ใช้เขียนโปรแกรมได้ หรือที่เรียกว่า HTML Application HTML เป็นภาษาประเภท
+Markup สําหรับการการสร้างเว็บเพจ โดยใช้ภาษา HTML สามารถทําโดยใช้โปรแกรม Text Editor ต่างๆ
+เช่น VS Code, Vim หรือจะอาศัยโปรแกรมที่เป็นเครื่องมือช่วยสร้างเว็บเพจ เช่น Dream Weaver ซึ่งอํา
+นวยความสะดวกในการสร้างหน้า HTML ส่วนการเรียกใช้งานหรือทดสอบการทํางานของเอกสาร HTML
+จะใช้โปรแกรม web browser เช่น Google Chrome, Microsoft Edge, Mozilla Firefox, Safari และ
+Opera เป็นต้น
+\subsection{CSS}
 
-\section{\ifenglish%
-\ifcpe CPE \else ISNE \fi knowledge used, applied, or integrated in this project
-\else%
-ความรู้ตามหลักสูตรซึ่งถูกนำมาใช้หรือบูรณาการในโครงงาน
-\fi
-}
+CSS [5] ย่อมาจาก Cascading Style Sheet มักเรียกโดยย่อว่า ”สไตล์ชีต” คือภาษาที่ใช้เป็นส่วนของการ
+จัดรูปแบบการแสดงผลเอกสาร HTML โดยที่ CSS กําหนดกฏเกณฑ์ในการระบุรูปแบบ (หรือ Style)
+ของเนื้อหาในเอกสาร อันได้แก่ สีของข้อความ สีพื้นหลัง ประเภทตัวอักษร และการจัดวางข้อความ ซึ่งการ
+กําหนดรูปแบบ หรือ Style นี้ใช้หลักการของการแยกเนื้อหาเอกสาร HTML ออกจากคําสั่งที่ใช้ในการจัดรูป
+แบบการแสดงผล กําหนดให้รูปแบบของการแสดงผลเอกสาร ไม่ขึ้นอยู่กับเนื้อหาของเอกสาร เพื่อให้ง่ายต่อ
+การจัดรูปแบบการแสดงผลลัพธ์ของเอกสาร HTML โดยเฉพาะในกรณีที่มีการเปลี่ยนแปลงเนื้อหาเอกสาร
+บ่อยครั้ง หรือต้องการควบคุมให้รูปแบบการแสดงผลเอกสาร HTML มีลักษณะของความสมํ่าเสมอทั่วกันทุก
+หน้าเอกสารภายในเว็บไซต์เดียวกัน โดยกฏเกณฑ์ในการกําหนดรูปแบบ (Style) เอกสาร HTML ถูกเพิ่มเข้า
+มาครั้งแรกใน HTML 4.0 เมื่อปีพ.ศ. 2539 ในรูปแบบของ CSS level 1 Recommendations ที่กําหนด
+โดย องค์กร World Wide Web Consortium หรือ W3C
 
-อธิบายถึงความรู้ และแนวทางการนำความรู้ต่างๆ ที่ได้เรียนตามหลักสูตร ซึ่งถูกนำมาใช้ในโครงงาน
+\subsection{TypeScript}
 
-\section{\ifenglish%
-Extracurricular knowledge used, applied, or integrated in this project
-\else%
-ความรู้นอกหลักสูตรซึ่งถูกนำมาใช้หรือบูรณาการในโครงงาน
-\fi
-}
+Typescript [6] คือภาษา JavaScript ใน Version ที่ได้รับการ Upgrade สามารถทํางานบน Node.js
+Environment หรือ Web Browser ต่าง ๆ ที่มีการรองรับ ECMAScript 3 ขึ้นไป TypeScript เป็น
+Statically Compiled Language ที่ได้จัดเตรียมทั้ง Static Typing, Classes และ Interface ไว้ให้แล้ว
+ช่วยให้คุณสามารถเขียน Code ของ JavaScript ที่เรียบง่ายและ Clean ได้อย่างสะดวกขึ้น ดังนั้น การใช้
+TypeScript จะช่วยให้คุณสามารถสร้าง Software ที่ปรับใช้งานได้ง่ายและมีประสิทธิภาพมากยิ่งขึ้น
+\subsection{Tailwind CSS}
 
-อธิบายถึงความรู้ต่างๆ ที่เรียนรู้ด้วยตนเอง และแนวทางการนำความรู้เหล่านั้นมาใช้ในโครงงาน
+Tailwind CSS [7] คือ CSS [5] Framework ตัวหนึ่งที่มีรูปแบบการทํางานแบบ Utility-First โดย
+Utility คือ Class Selector ตัวหนึ่ง ที่เมื่อใช้งานก็เพียงเรียกใช้Utility ต่างๆมาประกอบกันให้ได้การแสดง
+ผลตามที่เราต้องการ ซึ่งจะมีความต่างกับ CSS Framework อื่นที่มักจะกําหนด Class Selector ให้เฉพาะ
+เจาะจงกับรูปแบบการแสดงผลของ Element นั้น ๆ ไปเลย
+\subsection{Next.js}
+
+Next.js [8] เป็น open-source React framework ซึ่งต่างจาก React ตรงที่ Next.js เป็นการใช้server
+side rendering และยังสามารถทําเว็ปไซต์ได้ทั้งแบบ static และ dynamic ซึ่งข้อดีของการเป็น Server
+Side Rendering คือ ช่วยในเรื่อง SEO หรือ search engine optimization เพราะถ้าทําการ inspect
+เว็ปไซต์ที่สร้างโดย Next.js จะเห็นว่า source จะเป็น html ซะส่วนใหญ่ ซึ่งทําให้SEO ค้นผ่าน source
+เพื่อให้ได้ข้อมูลและจัดหมวดหมู่ได้ง่ายกว่า React ที่เป็น JavaScript มากกว่า ทําให้Next.js เป็นที่นิยมใน
+หลาย ๆ บริษัท นอกจากนี้ ข้อดีก็คือ render ได้เร็วกว่า React เพราะ Next.js มีสิ่งที่เรียกว่า get static
+path ซึ่งการสร้าง path แบบ static แบบเว็ปไซต์ html โดยไม่ต้องทําการเชื่อมต่อกับ back-end เพื่อให้
+ได้data ยิ่งไปกว่านั้น Next.js สามารถรวมเข้ากับ back-end ได้ง่ายๆ เพราะ Next.js มีสิ่งที่เรียกว่า API
+routes ในการรับส่ง request ใน folder ของ page จะมีอีก folder ที่เรียกว่า api ที่ถูกปฏิบัติเป็น endpoint
+แทนที่จะเป็น page ซึ่ง folder api นี้จะเป็นในส่วนหนึ่งของ server-side เท่านั้น ทําให้ไม่ไปเพิ่ม size ของ
+Client Side
+\subsection{MySQL}
+
+MySQL [9] คือ ระบบจัดการฐานข้อมูล หรือ Database Management System (DBMS) แบบข้อมูล
+เชิงสัมพันธ์ หรือ Relational Database Management System (RDBMS) ซึ่งเป็นระบบฐานข้อมูลที่จัด
+เก็บรวบรวมข้อมูลในรูปแบบตาราง โดยมีการแบ่งข้อมูลออกเป็นแถว (Row) และในแต่ละแถวแบ่งออกเป็น
+คอลัมน์(Column) เพื่อเชื่อมโยงระหว่างข้อมูลในตารางกับข้อมูลในคอลัมน์ที่กําหนด แทนการเก็บข้อมูลที่
+แยกออกจากกัน โดยไม่มีความเชื่อมโยงกัน ซึ่งประกอบด้วยข้อมูล (Attribute) ที่มีความสัมพันธ์เชื่อมโยงกัน
+(Relation) โดยใช้RDBMS Tools สําหรับการควบคุมและจัดเก็บฐานข้อมูลที่จําเป็น ทําให้นําไปประยุกต์
+ใช้งานได้ง่าย ช่วยเพิ่มประสิทธิภาพในการทํางานให้มีความยืดหยุ่นและรวดเร็วได้มากยิ่งขึ้น รวมถึงเชื่อมโยง
+ข้อมูล ที่จัดแบ่งกลุ่มข้อมูลแต่ละประเภทได้ตามต้องการ จึงทําให้MySQL เป็นโปรแกรมระบบจัดฐานข้อมูล
+ที่ได้รับความนิยมสูง
+\subsection{JSON}
+
+JSON [10] ย่อมาจาก (JavaScript Object Notation) เป็นมาตรฐานในการแลกเปลี่ยนข้อมูล (Data Interchange Format) ที่ได้รับความนิยมแทบจะสูงที่สุดในปัจจุบัน ก่อกําเนิดขึ้นในช่วงต้นยุค 2000 ซึ่ง JSON
+เป็นที่นิยมโดยเฉพาะในงานด้านการทํา APIs ซึ่งเหล่า developers ทุกคนคงรู้จักและคุ้นเคยกันเป็นอย่างดี
+แม้ว่าจะมีรูปแบบข้อมูลอื่น ๆ อีกมากมายเช่น XML, CSV, YAML, etc เป็นต้น
+
+\subsubsection{จุดเด่นของ JSON}
+
+• อ่านทําความเข้าใจได้ง่าย
+
+• มีความเบา (lightweight)
+
+• มีความเป็นมาตรฐานสูง และเป็นที่นิยมสูง
+
+• มีความเร็วในการ access ข้อมูลที่สูง เพราะไม่ได้มีโครงสร้างที่ซับซ้อนเหมือนเช่น XML เป็นต้น
+
+\section{ด้าน User Interface}
+
+ในส่วนนี้จะอธิบายถึงการออกแบบ User Interface ของเว็บแอปพลิเคชัน
+\subsection{Design Thinking}
+
+กระบวนการออกแบบ design thinking นั้นมีหลากหลายรูปแบบ ทั้งรูปแบบ 3 ขั้น ไปจนถึง 7 ขั้น ทุกรูป
+แบบมีความคล้ายคลึงมากที่สุด และใช้หลักการเดียวกันที่อ้างอิงจาก Herbert Simon ผู้ชนะรางวัลโนเบล
+ในสาขา The Sciences of the Artificial ในปี1969 โดยรูปแบบที่นิยมใช้กันมากที่สุด คือ รูปแบบของ
+Hasso-Plattner Institute of Design at Stanford มีทั้งหมด 5 กระบวนด้วยกัน ดังนี้
+
+1. Empathise หรือ การเข้าใจปัญหา คือ การทําความเข้าใจกับปัญหาก่อน ตั้งแต่การเข้าใจผู้ใช้ กลุ่ม
+เป้ าหมาย หรือเข้าใจสิ่งที่ต้องการแก้ไขเพื่อหาหนทางที่เหมาะสม และดีที่สุดให้ได้ โดยเริ่มต้นจาก การ
+เข้าใจคําถาม สร้างสมมติฐาน กระตุ้นให้เกิดการใช้ความคิดที่นําไปสู่ความคิด สร้างสรรค์ และวิเคราะห์
+ปัญหาให้ถี่ถ้วน เพื่อหาแนวทางที่ชัดเจน นําไปสู่การแก้ไขปัญหาที่ตรงประเด็น และสร้างผลลัพธ์ที่ดีที่-
+สุด
+
+2. Define หรือ กําหนดปัญหาให้ชัดเจน คือ การเข้าใจความต้องการ ปัญหา และวิเคราะห์ข้อมูลเชิงลึก
+เพื่อคัดกรองหาปัญหาที่แท้จริง กําหนดหรือบ่งชี้ปัญหาอย่างชัดเจน เพื่อที่จะเป็นแนวทางในการปฎิบัติ
+และมีทิศทางในการแก้ไขปัญหาอย่างชัดเจน
+
+3. Ideate หรือ ระดมความคิด คือ การนําเสนอแนวคิดต่างๆร่วมกัน ถึงวิธีการแก้ไขปัญหา อย่างไม่มี
+กรอบจํากัด การระดมความคิดควรมีมุมมองหลากหลาย และมีหลากหลายแนวทางให้ได้มากที่สุด เพื่อ
+ให้มีฐานข้อมูลในการนําไปวิเคราะห์และสรุปผล เพื่อนําไปแก้ไขปัญหา โดยไม่จําเป็นต้องเป็นแนวทาง
+ใดแนวทางหนึ่ง และการระดมความคิดยังช่วยมองให้เห็นปัญหาที่หลากหลายได้มากขึ้น
+
+4. Prototype หรือ สร้างต้นแบบที่เลือก คือ การออกแบบผลิตภัณฑ์หรือนวัตกรรม เพื่อสร้างต้นแบบสําหรับการทดสอบ และนําไปใช้จริง ซึ่งคือ การลงมือปฎิบัติหรือทดลองตามแนวทางการแก้ไขปัญหาที่ได้
+กําหนดไว้
+
+5. Test หรือ ทดสอบการแก้ไขปัญหา นํา Prototype ที่เราทําการทําขึ้นมาไปทดสอบกับผู้ใช้ว่าสามารถ
+แก้ไขปัญหาของ ผู้ใช้ได้หรือไม่ และหลังจากนั้นถ้าหากการแก้ปัญหายังไม่สามารถช่วยแก้ไขได้ หรือ
+แก้ไขได้ยังไม่ดีพอ ผู้จัดทําจะต้องกลับไปทําตั้งแต่ขั้นตอนแรกอีกครั้งจนกว่าจะสามารถออกแบบโปรแกรมที่แก้ไขปัญหา ของผู้ใช้ได้
+
+
+
+% การทำโครงงาน เริ่มต้นด้วยการศึกษาค้นคว้า ทฤษฎีที่เกี่ยวข้อง หรือ งานวิจัย/โครงงาน ที่เคยมีผู้นำเสนอไว้แล้ว ซึ่งเนื้อหาในบทนี้ก็จะเกี่ยวกับการอธิบายถึงสิ่งที่เกี่ยวข้องกับโครงงาน เพื่อให้ผู้อ่านเข้าใจเนื้อหาในบทถัดๆ ไปได้ง่ายขึ้น
+
+% \section{The first section}
+% The text for Section 1 goes here.
+
+% \section{Second section}
+% Section 2 text.
+
+% \subsection{Subsection heading goes here}
+
+% Subsection 1 text
+
+% \subsubsection{Subsubsection 1 heading goes here}
+% Subsubsection 1 text
+
+% \subsubsection{Subsubsection 2 heading goes here}
+% Subsubsection 2 text
+
+% \section{Third section}
+% Section 3 text. The dielectric constant\index{dielectric constant}
+% at the air-metal interface determines
+% the resonance shift\index{resonance shift} as absorption or capture occurs
+% is shown in Equation~\eqref{eq:dielectric}:
+
+% \begin{equation}\label{eq:dielectric}
+% k_1=\frac{\omega}{c({1/\varepsilon_m + 1/\varepsilon_i})^{1/2}}=k_2=\frac{\omega
+% \sin(\theta)\varepsilon_\mathit{air}^{1/2}}{c}
+% \end{equation}
+
+% \noindent
+% where $\omega$ is the frequency of the plasmon, $c$ is the speed of
+% light, $\varepsilon_m$ is the dielectric constant of the metal,
+% $\varepsilon_i$ is the dielectric constant of neighboring insulator,
+% and $\varepsilon_\mathit{air}$ is the dielectric constant of air.
+
+% \section{About using figures in your report}
+
+% % define a command that produces some filler text, the lorem ipsum.
+% \newcommand{\loremipsum}{
+%   \textit{Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+%   eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+%   minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+%   aliquip ex ea commodo consequat. Duis aute irure dolor in
+%   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+%   pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+%   culpa qui officia deserunt mollit anim id est laborum.}\par}
+
+% \begin{figure}
+%   \centering
+
+%   \fbox{
+%      \parbox{.6\textwidth}{\loremipsum}
+%   }
+
+%   % To include an image in the figure, say myimage.pdf, you could use
+%   % the following code. Look up the documentation for the package
+%   % graphicx for more information.
+%   % \includegraphics[width=\textwidth]{myimage}
+
+%   \caption[Sample figure]{This figure is a sample containing \gls{lorem ipsum},
+%   showing you how you can include figures and glossary in your report.
+%   You can specify a shorter caption that will appear in the List of Figures.}
+%   \label{fig:sample-figure}
+% \end{figure}
+
+% Using \verb.\label. and \verb.\ref. commands allows us to refer to
+% figures easily. If we can refer to Figures
+% \ref{fig:walrus} and \ref{fig:sample-figure} by name in the {\LaTeX}
+% source code, then we will not need to update the code that refers to it
+% even if the placement or ordering of the figures changes.
+
+% \loremipsum\loremipsum
+
+% % This code demonstrates how to get a landscape table or figure. It
+% % uses the package lscape to turn everything but the page number into
+% % landscape orientation. Everything should be included within an
+% % \afterpage{ .... } to avoid causing a page break too early.
+% \afterpage{
+%   \begin{landscape}
+%   \begin{table}
+%     \caption{Sample landscape table}
+%     \label{tab:sample-table}
+
+%     \centering
+
+%     \begin{tabular}{c||c|c}
+%         Year & A & B \\
+%         \hline\hline
+%         1989 & 12 & 23 \\
+%         1990 & 4 & 9 \\
+%         1991 & 3 & 6 \\
+%     \end{tabular}
+%   \end{table}
+%   \end{landscape}
+% }
+
+% \loremipsum\loremipsum\loremipsum
+
+% \section{Overfull hbox}
+
+% When the \verb.semifinal. option is passed to the \verb.cpecmu. document class,
+% any line that is longer than the line width, i.e., an overfull hbox, will be
+% highlighted with a black solid rule:
+% \begin{center}
+% \begin{minipage}{2em}
+% juxtaposition
+% \end{minipage}
+% \end{center}
+
+% \section{\ifenglish%
+% \ifcpe CPE \else ISNE \fi knowledge used, applied, or integrated in this project
+% \else%
+% ความรู้ตามหลักสูตรซึ่งถูกนำมาใช้หรือบูรณาการในโครงงาน
+% \fi
+% }
+
+% อธิบายถึงความรู้ และแนวทางการนำความรู้ต่างๆ ที่ได้เรียนตามหลักสูตร ซึ่งถูกนำมาใช้ในโครงงาน
+
+% \section{\ifenglish%
+% Extracurricular knowledge used, applied, or integrated in this project
+% \else%
+% ความรู้นอกหลักสูตรซึ่งถูกนำมาใช้หรือบูรณาการในโครงงาน
+% \fi
+% }
+
+% อธิบายถึงความรู้ต่างๆ ที่เรียนรู้ด้วยตนเอง และแนวทางการนำความรู้เหล่านั้นมาใช้ในโครงงาน
